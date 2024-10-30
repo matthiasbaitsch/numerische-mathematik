@@ -1,0 +1,114 @@
+---
+title: Aufgabenblatt 2
+subtitle: Erzeugung und Darstellung von Stabtragwerken
+---
+
+Wir halten zunächst fest, welche Informationen zur Beschreibung eines Stabtragwerks notwendig sind. Hierzu betrachten wir das dargestellte einfache System.
+
+![](bilder/beispiel.svg){fig-align="center" width="40%"}
+
+Um dieses System zu beschreiben benötigen wir:
+
+- Koordinaten der Knotenpunkte.
+- Die Knotennummern der einzelnen Stäbe.
+- Auflagerbedingungen in horizontaler und vertikaler Richtung.
+- Auf die Knoten einwirkenden Kräfte.
+- Dehnsteifigkeit $EA$.
+
+Zunächst verwenden wir für alle Stäbe eine einheitliche Dehnsteifigkeit. Dies lässt sich später einfach erweitern.
+
+Das Tragwerk erzeugen wir in einer Funktion, die in einer eigenen Datei abgelegt werden soll. Das erleichtert später die Arbeit.
+
+::: {.panel-tabset}
+## Julia - structures.jl
+
+``` {.julia}
+using DotMaps
+
+
+function simple_example()    
+    s = DotMap()
+    s.EA = 60000    
+    s.nodes = [
+        0 4 0
+        0 0 3
+    ]    
+    s.elements = [
+        1 1 3
+        2 3 2
+    ]
+    s.forces = zeros(2, 3)
+    s.forces[1, 3] = 120
+    s.supports = falses(2, 3)
+    s.supports[:, 1] .= true
+    s.supports[2, 2] = true
+    return s
+end
+```
+
+## Python - structures.py
+
+``` {.python}
+import numpy as np
+from objdict import *
+
+
+def simple_example():
+    s = ObjDict()
+    s.EA = 60000
+    s.nodes = np.array(
+        [[0, 4, 0],
+        [0, 0, 3]])
+    s.elements = np.array(
+        [[0, 0, 2],
+        [1, 2, 1]])
+    s.forces = np.zeros((2, 3))
+    s.forces[0, 2] = 120
+    s.supports = np.full((2, 3), False)
+    s.supports[:, 0] = True
+    s.supports[1, 1] = True
+    return s
+```
+:::
+
+## Erzeugung von Stabtragwerken
+
+1. Erzeugen Sie die Datei `structures.(jl|py)` und fügen Sie den Code oben ein.
+
+1. Legen Sie ein Jupyter-Notebook `fachwerke.ipynb` an. Binden Sie die Datei `structures.(jl|py)` ein und erzeugen Sie das Tragwerk.
+
+## Hilfsfunktion füp Größe des Tragwerks
+
+Erstellen Sie eine Function `struct_size(s)` mit der ein Maß für die Abmessunges des Tragwerks ermittelt wird. Sie benötigen das später zum Beispiel für das Zeichnen der Auflager. Eine gute Möglichkeit besteht darin, das geometrische Mittel von Breite und Höhe des Systems zu verwenden, also
+
+$$
+    s = \sqrt{(x_{max} - x_{min}) \cdot (y_{max} - y_{min})}.
+$$
+
+## Darstellung von Stabtragwerken
+
+Zeichnen Sie das Stabtragwerk, zum Beispiel so:
+
+![](bilder/beispiel-matlab.svg){fig-align="center" width="40%"}
+
+Es bietet sich an, den Code zunächst einfach in das Jupyter-Notebook zu schreiben und am Schluss in eine Funktion `draw_system(s)` zu verschieben. Gehen Sie in den folgenden Schritten vor:
+
+1. Knoten
+1. Stäbe
+1. Kräfte 
+1. Auflager
+
+## Anwendungsbeispiel
+
+Erstellen Sie das Modell einer interessanten ebenen Fachwerkstruktur, für die Sie später Verformungen und Schnittgrößen berechnen möchten. Beachten Sie, dass es in mit einer Programmiersprache möglich ist, regelmäßige Tragwerke mit nur wenigen Anweisungen zu erzeugen, selbst wenn diese viele Knoten und Stäbe besitzen.
+
+Hier ein paar Bilder zur Anregung.
+
+::: {layout="[[1,-0.1,1.8], [1]]"}
+![](bilder/FWKranAufgabe.png)
+
+![](bilder/L-Polonceaudachstuhl.png)
+
+![](bilder/image002.jpg)
+:::
+
