@@ -15,9 +15,9 @@ Um dieses System zu beschreiben benötigen wir:
 - Auf die Knoten einwirkenden Kräfte.
 - Dehnsteifigkeit $EA$.
 
-Zunächst verwenden wir für alle Stäbe eine einheitliche Dehnsteifigkeit. Dies lässt sich später einfach erweitern.
+Zunächst verwenden wir für alle Stäbe eine einheitliche Dehnsteifigkeit, später lässt sich das einfach erweitern.
 
-Das Tragwerk erzeugen wir in einer Funktion, die in einer eigenen Datei abgelegt werden soll. Das erleichtert später die Arbeit.
+Das Tragwerk erzeugen wir in einer Funktion, die in einer eigenen Datei abgelegt werden soll, das erleichtert später die Arbeit. Unten der Code, den Sie bitte kopieren. In der Funktion wird eine Variable `s` verwendet, in der die verschiedenen Eigenschaften des Systems ($EA$, Knoten, Stäbe etc.) abgelegt werden. Der Zugriff auf die Eigenschaften erfolgt dann mit dem Punkt-Operator, also greift man zum Beispiel mit $s.nodes$ auf die Knoten des Systems zu.
 
 ::: {.panel-tabset}
 ## Julia - structures.jl
