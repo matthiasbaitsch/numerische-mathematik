@@ -1,0 +1,46 @@
+name: Render and publish
+
+on:
+  push:
+    branches: main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      
+    steps:
+      - name: Install required command line tools
+        run: sudo apt-get install librsvg2-bin
+      - name: Check out
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+      - name: Quarto render assignments
+        run: quarto render aufgaben
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_output'
+
+  deploy:
+    needs: render
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
