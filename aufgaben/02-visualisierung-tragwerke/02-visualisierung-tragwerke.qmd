@@ -25,7 +25,6 @@ Das Tragwerk erzeugen wir in einer Funktion, die in einer eigenen Datei abgelegt
 ``` {.julia}
 using DotMaps
 
-
 function simple_example()    
     s = DotMap()
     s.EA = 60000    
@@ -52,7 +51,6 @@ end
 import numpy as np
 from objdict import *
 
-
 def simple_example():
     s = ObjDict()
     s.EA = 60000
@@ -71,13 +69,13 @@ def simple_example():
 ```
 :::
 
-## Erzeugung von Stabtragwerken
+## Stabtragwerk erzeugen
 
 1. Erzeugen Sie die Datei `structures.(jl|py)` und fügen Sie den Code oben ein.
 
 1. Legen Sie ein Jupyter-Notebook `fachwerke.ipynb` an. Binden Sie die Datei `structures.(jl|py)` ein und erzeugen Sie das Tragwerk.
 
-## Hilfsfunktion füp Größe des Tragwerks
+## Hilfsfunktion füp Größe des Systems
 
 Erstellen Sie eine Function `struct_size(s)` mit der ein Maß für die Abmessunges des Tragwerks ermittelt wird. Sie benötigen das später zum Beispiel für das Zeichnen der Auflager. Eine gute Möglichkeit besteht darin, das geometrische Mittel von Breite und Höhe des Systems zu verwenden, also
 
@@ -85,7 +83,7 @@ $$
     s = \sqrt{(x_{max} - x_{min}) \cdot (y_{max} - y_{min})}.
 $$
 
-## Darstellung von Stabtragwerken
+## Stabtragwerk graphisch darstellen
 
 Zeichnen Sie das Stabtragwerk, zum Beispiel so:
 
