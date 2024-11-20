@@ -1,0 +1,137 @@
+---
+title: Aufgabenblatt 3
+subtitle: Berechnung von Verschiebungen und Schnittgrößen
+---
+
+In diesem Übungsblatt lernen Sie ein paar nützliche Dinge für die Berechnung der Verschiebungen kennen. Diese verwenden Sie dann in einer Funktion zur Berechnung der Verschiebungen und einer weiteren Funktion zur Ermittlung der Normalkräfte.
+
+## Grundlagen
+
+### Vektoren und Matrizen umsortieren
+
+\newcommand{\mtran}{^\top}
+\newcommand{\mmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+
+Gegeben sind
+
+$$
+  \mathbf{A} = \mmat{1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8}
+  \quad \text{und} \quad
+  \mathbf{x} = \mmat{1 & 2 & 3 & 4 & 5 & 6 & 7 & 8}\mtran.
+$$
+
+Sortieren Sie in Julia/Python die Matrix $\mathbf{A}$ zum Vektor
+
+$$
+ \mmat{1 & 5 & 2 & 6 & 3 & 7 & 4 & 8}\mtran
+$$
+
+und den Vektor $\mathbf{x}$ zur Matrix 
+
+$$
+ \mmat{1 &  3 & 5 & 7 \\ 2 & 4 & 6 & 8}
+$$
+
+um.
+
+### Addition einer Untermatrix mit Indexvektor
+
+Kopieren Sie den Code und führen Sie die Anweisungen aus. 
+
+::: {.panel-tabset}
+## Julia
+
+``` {.julia}
+A = ones(6, 6)
+I = [6, 1]
+B = [1 2; 3 4]
+A[I, I] += B
+A
+```
+
+## Python
+
+``` {.python}
+A = np.ones([6, 6])
+I = [5, 0]
+B = np.array([[1, 2], [3, 4]])
+A[np.ix_(I, I)] += B
+A
+```
+:::
+
+Was passiert da?
+
+### Assemblierungsmatrix
+
+Betrachten Sie den Stab 3 des Beispiels aus dem Skript.
+
+1. Stellen Sie Elementsteifigkeitsmatrix $\mathbf{K}^3$ und die Assemblierungsmatrix $\mathbf{A}^3$ auf.
+1. Berechnen Sie die globale Steifigkeitsmatrix für Stab 3 mithilfe der Beziehung $\hat{\mathbf{K}}^3 = (\mathbf{A}^3)\mtran\mathbf{K}^3\mathbf{A}^3$.
+1. Zeigen Sie, dass Sie dasselbe Ergebnis erzielen können, wenn Sie $\mathbf{K}^3$ mithilfe des Indexvektors $\mathbf{I}^3 = \mmat{5 & 6 & 3 & 4}\mtran$ auf eine $6\times{6}$ Nullmatrix addieren. In Python müssen Sie berücksichtigen, dass die Indizierung bei 0 beginnt.
+
+Die Berechnungen sollen in Julia/Python erfolgen.
+
+## Berechnung
+
+Es sollen zwei Funktionen zur Berechnung der Verschiebungen und Schnittgrößen programmiert werden. Für ein gegebenes System `s` soll die Berechnung wie folgt ablaufen:
+
+```{.julia}
+  s.u_hat = solve(s)
+  s.N = member_forces(s)
+```
+
+### Verschiebungen
+
+Implementieren Sie die Funktion
+
+::: {.panel-tabset}
+## Julia
+
+``` {.julia}
+function solve(s)
+  u_hat = 99
+  return u_hat
+end
+```
+
+## Python
+
+``` {.python}
+def solve(s)
+  u_hat = 99
+  return u_hat
+```
+:::
+
+mit der für das Tragsystem `s` die Verschiebungen $\hat{\mathbf{u}}$ berechnet werden. Dabei sollen die Verschiebungen so in einer Matrix angeordnet werden, dass jede Spalte den Verschiebungsvektor eines Knotens enthält.
+
+### Normalkräfte
+
+Implementieren Sie die Funktion
+
+::: {.panel-tabset}
+## Julia
+
+``` {.julia}
+function member_forces(s)
+  N = 99
+  return N
+end
+```
+
+## Python
+
+``` {.python}
+def member_forces(s)
+  N = 99
+  return N
+```
+:::
+
+die für das Tragsystem `s` mithilfe der Verschiebungen `s.u_hat` die Normalkräfte für alle Stäbe berechnet. Die Ergebnisse sollen in einem Zeilenvektor zurückgegeben werden.
+
+\emph{Tipps:} 
+
+- Verwenden Sie eine Funktion `truss_n(EA, x1, x2, u1, u2)` um für einen einzelnen Stab die Normalkraft zu berechnen.
+- Vergleichen Sie Zwischen- und  Endergebnisse ihrer Rechnung mit dem Beispiel aus dem Skript.
