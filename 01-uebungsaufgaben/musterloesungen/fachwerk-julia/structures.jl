@@ -18,7 +18,7 @@ function simple_example()
 end
 
 
-function girder(l, h1, h2, nn)
+function girder(l=40, h1=2, h2=7, nn=11)
     s = DotMap()
 
     # Stiffness
