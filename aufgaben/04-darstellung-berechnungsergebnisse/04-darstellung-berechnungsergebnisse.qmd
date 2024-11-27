@@ -1,0 +1,36 @@
+---
+title: Aufgabenblatt 4
+subtitle: Darstellung der Berechnungsergebnisse
+---
+
+## Darstellung von Berechnungsergebnissen
+
+Die folgenden Abbildungen zeigen verschiedenen Möglichkeiten die berechneten Ergebnisse darzustellen. Sie sollen als Anregung dienen, ihre eigenen Ergebnisse können (müssen aber nicht) auch anders dargestellt werden.
+
+\includegraphics[width=49mm]{deformation}
+\hspace*{5mm}
+\includegraphics[width=50mm]{memberForces}
+\hspace*{5mm}
+\includegraphics[width=40mm]{results}
+    
+::: {layout-ncol=3}
+![](bilder/deformation.png)
+
+![](bilder/memberForces.png)
+
+![](bilder/results.png)
+:::
+
+### Plot der Verschiebungen 
+
+Erstellen Sie eine Funktion `draw_deformation(s)` zum Plotten des deformierten Systems.
+
+### Darstellung der Normalkräfte
+
+Implementieren Sie eine Funktion `draw_member_forces(s)` mit der die Normalkräfte dargestellt werden können.
+
+Tipp: Sie können den Vektor $\mathbf{d}_0$ um 90° drehen, mit der Normalkraft und einem geeigneten Faktor skalieren und zu den Knotenkoordinaten eines Stabes addieren. Wie Sie die Flächen darstellen (falls gewünscht, man könnte auch Linien verwenden wie in RStab) finden Sie in den Unterlagen zu Julia/Python.
+
+### Ausgabe der Berechnungsergebnisse
+
+Geben Sie die berechneten Verschiebungen und Normalkräfte aus. 
