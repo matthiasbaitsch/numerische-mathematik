@@ -7,12 +7,6 @@ subtitle: Darstellung der Berechnungsergebnisse
 
 Die folgenden Abbildungen zeigen verschiedenen Möglichkeiten die berechneten Ergebnisse darzustellen. Sie sollen als Anregung dienen, ihre eigenen Ergebnisse können (müssen aber nicht) auch anders dargestellt werden.
 
-\includegraphics[width=49mm]{deformation}
-\hspace*{5mm}
-\includegraphics[width=50mm]{memberForces}
-\hspace*{5mm}
-\includegraphics[width=40mm]{results}
-    
 ::: {layout-ncol=3}
 ![](bilder/deformation.png)
 
