@@ -3,6 +3,9 @@ title: Aufgabenblatt 4
 subtitle: Darstellung der Berechnungsergebnisse
 ---
 
+\newcommand{\SI}[2]{#1\,\mathrm{#2}}
+\newcommand{\si}[1]{#1}
+
 ## Darstellung von Berechnungsergebnissen
 
 Die folgenden Abbildungen zeigen verschiedenen Möglichkeiten die berechneten Ergebnisse darzustellen. Sie sollen als Anregung dienen, ihre eigenen Ergebnisse können (müssen aber nicht) auch anders dargestellt werden.
@@ -37,7 +40,7 @@ Stellen Sie Verformung und Schnittgrößen für Ihr Anwendungsbeispiel von Übun
 
 ### Wäscheleine und statisch unterbestimmte Systeme
 
-Berechnen Sie mit ihrem Programm die Verformung einer Wäscheleine von \SI{5}{\meter} Länge (Stahlseil, \SI{3}{\milli\meter} Durchmesser) mit einem Wäschestück (Masse \SI{1}{\kilo\gram} als Einzellast in der Mitte).
+Berechnen Sie mit ihrem Programm die Verformung einer Wäscheleine von $\SI{5}{m}$ Länge (Stahlseil, $\SI{3}{mm}$ Durchmesser) mit einem Wäschestück (Masse $\SI{1}{kg}$ als Einzellast in der Mitte).
 
 Verallgemeinerung: Was passiert, wenn Sie ein statisch unterbestimmtes System berechnen? Was hat das mit der Theorie zu linearen Gleichungssystem aus Mathematik 1 zu tun?
 
