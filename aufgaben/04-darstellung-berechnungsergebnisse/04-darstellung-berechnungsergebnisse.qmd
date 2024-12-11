@@ -28,3 +28,18 @@ Tipp: Sie können den Vektor $\mathbf{d}_0$ um 90° drehen, mit der Normalkraft 
 ### Ausgabe der Berechnungsergebnisse
 
 Geben Sie die berechneten Verschiebungen und Normalkräfte aus. 
+
+## Anwendungen
+
+### Eigenes Tragwerk
+
+Stellen Sie Verformung und Schnittgrößen für Ihr Anwendungsbeispiel von Übungsblatt 2 graphisch dar.
+
+### Wäscheleine und statisch unterbestimmte Systeme
+
+Berechnen Sie mit ihrem Programm die Verformung einer Wäscheleine von \SI{5}{\meter} Länge (Stahlseil, \SI{3}{\milli\meter} Durchmesser) mit einem Wäschestück (Masse \SI{1}{\kilo\gram} als Einzellast in der Mitte).
+
+Verallgemeinerung: Was passiert, wenn Sie ein statisch unterbestimmtes System berechnen? Was hat das mit der Theorie zu linearen Gleichungssystem aus Mathematik 1 zu tun?
+
+Tipp: Für eine gegebene Verschiebung $\hat{\mathbf{u}}$ liefert das Produkt $\hat{\mathbf{K}}\hat{\mathbf{u}}$ die äußeren Kräfte mit denen ein Gleichgewichtszustand erreicht wird. Was bedeutet es in diesem Zusammenhang, wenn das LGS $\hat{\mathbf{K}}\hat{\mathbf{u}} = \mathbf{0}$ nichttriviale Lösungen $\hat{\mathbf{u}} \neq \mathbf{0}$ besitzt?
+
