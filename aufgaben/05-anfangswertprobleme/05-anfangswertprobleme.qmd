@@ -16,7 +16,7 @@ in Julia/Python. Parameter sind jeweils die Funktion der Differentialgleichung $
 Lösen Sie mit allen drei Funktionen näherungsweise das Anfangswertproblem
 
 $$
-  y'(x) = sin(2 \pi x) + y \quad \text{mit} \quad y(0) = 0
+  y'(x) = \sin(2 \pi x) + y \quad \text{mit} \quad y(0) = 0
 $$
 
 für $0 \leq x \leq 2$ und $h = 0.2$. Vergleichen Sie die Näherungen mit der exakten Lösung
