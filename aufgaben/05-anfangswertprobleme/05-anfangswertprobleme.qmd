@@ -1,0 +1,29 @@
+---
+title: Aufgabenblatt 5
+subtitle: Numerische Lösung von Anfangswertproblemen
+---
+
+Implementieren Sie die Funktionen
+
+```
+  euler(F, I, h, y0)
+  halbschritt(F, I, h, y0)
+  rungekutta(F, I, h, y0)
+```
+
+in Julia/Python. Parameter sind jeweils die Funktion der Differentialgleichung $F$, das Lösungs\-intervall $I$, die Schrittweite $h$ und der Anfangswert $y_0$. Die Funktionen gibt zwei Arrays zurück, die jeweils die Werte $x_0, x_1, \dots, x_N$ sowie $y_0, y_1, \dots, y_N$ enthalten.
+
+Lösen Sie mit allen drei Funktionen näherungsweise das Anfangswertproblem
+
+$$
+  y'(x) = sin(2 \pi x) + y \quad \text{mit} \quad y(0) = 0
+$$
+
+für $0 \leq x \leq 2$ und $h = 0.2$. Vergleichen Sie die Näherungen mit der exakten Lösung
+
+$$
+  y(x) = \frac{2 \pi  e^x-\sin (2 \pi  x)-2 \pi  \cos (2 \pi  x)}{1+4 \pi ^2}.
+$$
+
+Tipp: Beginnen Sie mit dem Euler-Verfahren und testen Sie ihren Code!
+
