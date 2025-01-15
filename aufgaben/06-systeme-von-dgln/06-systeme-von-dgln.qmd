@@ -37,7 +37,7 @@ $$
     1 - 2 \cos x - \sin x
   \end{pmatrix}.
 $$
-Untersuchen Sie die Genauigkeit der Verfahren in der Datei `genauigkeit.mlx`:
+Untersuchen Sie die Genauigkeit der Verfahren in der Datei `genauigkeit.ipynb`:
 
 1. Geben Sie die Funktion $\mathbf{F}$ der Differentialgleichungen ein.
 
@@ -66,7 +66,7 @@ das für $0 \leq t \leq 350$ untersucht werden soll. Eine geschlossene Lösung d
 
 ![Näherungslösung für $y_1(t)$ der Van der Pol Gleichung](bilder/vanderpol.svg){#fig-vanderpol}
 
-Erzeugen Sie eine Datei `stabilitaet.mlx` und bearbeiten Sie folgende Punkte:
+Erzeugen Sie eine Datei `stabilitaet.ipynb` und bearbeiten Sie folgende Punkte:
 
 1. Geben Sie die Funktion $\mathbf{F}$ des Systems von Differentialgleichungen ein.
 
@@ -111,7 +111,7 @@ Das System von Differentialgleichungen hat seinen Hintergrund in der Modellierun
 
 ![Bénard-Konvektion (Quelle: TU Hamburg-Harburg)](bilder/benardkonvektion.png){#fig-bernard}
 
-Der Verlauf der Lösungen soll für $0 \leq t \leq 40$ und unterschiedliche Werte von $\alpha$ untersucht werden. Bearbeiten Sie hierzu folgende Punkte (Datei \datei{startwerte.mlx}):
+Der Verlauf der Lösungen soll für $0 \leq t \leq 40$ und unterschiedliche Werte von $\alpha$ untersucht werden. Bearbeiten Sie hierzu folgende Punkte (Datei `startwerte.ipynb`):
 
 1. Implementieren Sie die Lorenz-Differentialgleichungen in der Funktion $\mathbf{F}$.
 
