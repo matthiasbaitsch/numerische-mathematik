@@ -121,7 +121,9 @@ Der Verlauf der Lösungen soll für $0 \leq t \leq 40$ und unterschiedliche Wert
 
 1. Lesen Sie das Kapitel 'Der Flügelschlag eines Schmetterlings in Brasilien' aus dem Buch 'Alles ist relativ und anything goes' von John Higgs (freiwillig, das Kapitel finden Sie auf Moodle).
 
-Tipp: Den Vektor mit den Normen der Zeilenvektoren einer Matrix $\mathbf{A}$ berechnen Sie mit
+Tipps: 
+
+Den Vektor mit den Normen der Zeilenvektoren einer Matrix $\mathbf{A}$ berechnen Sie mit
 
 ::: {.panel-tabset}
 ### Julia
@@ -133,6 +135,22 @@ norm.(eachrow(A))
 np.linalg.norm(yb - ya, axis=1)
 ```
 :::
+
+Eine Raumkurve, die in der Matrix $\mathbf{y}$ abgelegt ist, plotten Sie mit
+
+::: {.panel-tabset}
+### Julia
+```{.julia}
+lines(y)
+```
+### Python
+```{.python}
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.plot(y[:, 0], y[:, 1], y[:, 2])
+```
+:::
+
 
 
 
