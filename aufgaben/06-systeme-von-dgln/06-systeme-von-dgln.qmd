@@ -1,0 +1,127 @@
+---
+title: Aufgabenblatt 6
+subtitle: Systeme von Differentialgleichungen und Eigenschaften von Lösungsverfahren
+---
+
+\newcommand{\mtran}{^\top}
+\newcommand{\R}{\mathbb{R}}
+
+Für die Eignung numerischer Verfahren für bestimmte Arten von Problemen spielen die Begriffe Genauigkeit und Stabilität eine wichtige Rolle. Darüber hinaus zeigen bestimmte nichtlineare Anfangswertprobleme ein interessantes Verhalten bei sehr kleinen Änderungen in den Anfangsbedingungen. Was damit gemeint ist soll in den folgenden Beispielen untersucht werden. Hierzu muss jedoch zunächst der Programmcode für die numerischen Lösungsverfahren so erweitert werden, dass Anfangswertprobleme mit mehreren unbekannten Funktionen gelöst werden können.
+
+## Erweiterung Programmcode
+
+Ändern Sie ihre Funktionen für das Euler-Verfahren, das Halbschrittverfahren und das Runge-Kutta-Verfahren so ab, dass Anfangswertprobleme mit $n$ unbekannten Funktionen gelöst werden können. Dabei soll bei einer Berechnung mit $N$ Schritten das Ergebnis in einer $N \times n$-Matrix zurückgegeben werden. Das bedeutet, dass jede Spalte der Matrix die Werte für eine Funktion enthält und jede Zeile das Ergebnis eines Zeitschritts. 
+
+Ihre Funktionen sollten in einer Datei `odesolve.jl` bzw. `odesolve.py` liegen, so dass sie später beliebig wiederverwendet werden können. Zum Testen verwenden Sie `test-odesolve.ipynb` von Moodle.
+
+## Genauigkeit
+
+Vergleichen Sie das Runge-Kutta-Verfahren, das Halbschritt-Verfahren und das Euler-Verfahren im Hinblick auf die Genauigkeit. Hierzu soll das Anfangswertproblem
+$$
+  \begin{array}{rcl}
+    y_1'(x) & = & y_2(x) \\[1ex]
+    y_2'(x) & = & x - y_1(x)
+  \end{array}
+  \quad\text{mit}\quad
+  \begin{array}{rcl}
+    y_1(0) & = & 1 \\[1ex]
+    y_2(0) & = & -1
+  \end{array}
+$$
+für $0 \leq x \leq 20$ betrachtet werden. Die exakte Lösung ist die Zykloide
+$$
+  \mathbf{y}(x)
+  =
+  \begin{pmatrix}
+    x + \cos x - 2 \sin x \\[1ex]
+    1 - 2 \cos x - \sin x
+  \end{pmatrix}.
+$$
+Untersuchen Sie die Genauigkeit der Verfahren in der Datei `genauigkeit.mlx`:
+
+1. Geben Sie die Funktion $\mathbf{F}$ der Differentialgleichungen ein.
+
+1. Plotten Sie den Verlauf der exakten Lösung $\mathbf{y}(x)$ für $0 \leq x \leq 20$.
+
+1. Berechnen Sie für $h_1 = 0.02$, $h_2 = 0.1$ und $h_3 = 0.5$ Näherungslösungen mit dem Euler-Verfahren, dem Halbschritt-Verfahren und dem 
+Runge-Kutta-Verfahren. Plotten Sie dabei den Verlauf der Näherungslösungen in einem Koordinatensystem zusammen mit der exakten Lösung.
+
+1. Bewerten Sie qualitativ ihre Ergebnisse. 
+
+## Stabilität
+
+Für bestimmte Anfangswertprobleme erzeugen explizite Zeitintegrationsverfahren für zu groß gewählte Schrittweiten Ergebnisse mit völlig unsinnigen Zahlenwerten. Ein Beispiel dafür ist das als Van der Pol Oszillator bezeichnete Anfangswertproblem
+$$
+  \begin{array}{rcl}
+    \dot y_1 & = & y_2 \\[1ex]
+    \dot y_2 & = & 100(1-y_1^2)y_2-y_1
+  \end{array}
+  \quad\text{mit den Anfangsbedingungen}\quad
+  \begin{array}{rcl}
+    y_1(0) & = & 2 \\[1ex]
+    y_2(0) & = & 0
+  \end{array}
+$$
+das für $0 \leq t \leq 350$ untersucht werden soll. Eine geschlossene Lösung dieses Problems lässt sich nicht ohne weiteres angeben. Eine sehr gute Näherung ist für die erste Komponente $y_1$ in @fig-vanderpol dargestellt.
+
+![Näherungslösung für $y_1(t)$ der Van der Pol Gleichung](bilder/vanderpol.svg){#fig-vanderpol}
+
+Erzeugen Sie eine Datei `stabilitaet.mlx` und bearbeiten Sie folgende Punkte:
+
+1. Geben Sie die Funktion $\mathbf{F}$ des Systems von Differentialgleichungen ein.
+
+1. Lösen Sie das Van der Pol-Problem mit dem Euler- und dem
+  Runge-Kutta-Verfahren jeweils für $h_1 = 0.001$ und $h_2 = 0.01$ und plotten sie den Verlauf
+  von $y_1$ über $t$. Vergleichen Sie Ihr Ergebnis für $h_1$ mit @fig-vanderpol. Wie bewerten Sie die Ergebnisse für $h_2$?
+
+1. Ermitteln Sie durch Ausprobieren jeweils den größten Wert für
+  die Schrittweite $h$, mit dem Sie noch sinnvolle Ergebnisse
+  erhalten.
+
+1. Kommentieren Sie die gefundenen Schrittweiten. Vergleichen Sie
+  für diese Werte von $h$ die Näherungslösungen mit @fig-vanderpol.
+
+## Abhängigkeit von Startwerten
+
+Im Jahr 1963 hat der Meteorologe Edward N. Lorenz das Anfangswertproblem 
+
+$$
+  \begin{array}{rcl}
+    \dot y_1 & = & \sigma \cdot (y_2 - y_1) \\[1ex]
+    \dot y_2 & = & y_1 \cdot (\rho - y_3) - y_2 \\[1ex]
+    \dot y_3 & = & y_1 y_2 - \beta y_3
+  \end{array}
+  \quad\text{mit}\quad
+  \begin{array}{rcl}
+    y_1(0) & = & 10 \\[1ex]
+    y_2(0) & = & 10 \\[1ex]
+    y_3(0) & = & 10 + \alpha
+  \end{array}
+$$
+
+formuliert. Dabei sind $y_1, y_2, y_3$ Funktionen von $t$ und $\sigma, \rho, \beta \in \mathbb{R}$ Parameter mit den Werten
+
+$$
+  \sigma = 10, \quad \rho = 28 \quad \text{und} \quad \beta = 8/3.
+$$
+
+Mit dem Parameter $\alpha \in \mathbb{R}$ kann der Einfluss des Startwertes $\mathbf{y}(0)$ untersucht werden.
+
+Das System von Differentialgleichungen hat seinen Hintergrund in der Modellierung atmosphärischer Strömungen. Als stark vereinfachtes Modell dient dabei die so genannte Bernard-Konvektion eines Fluids zwischen zwei Platten unterschiedlicher Temperatur (siehe @fig-bernard und \url{https://www.tuhh.de/rzt/rzt/it/Studium/seminar-lorenz}).
+
+![Bénard-Konvektion (Quelle: TU Hamburg-Harburg)](bilder/benardkonvektion.png){#fig-bernard}
+
+Der Verlauf der Lösungen soll für $0 \leq t \leq 40$ und unterschiedliche Werte von $\alpha$ untersucht werden. Bearbeiten Sie hierzu folgende Punkte (Datei \datei{startwerte.mlx}):
+
+1. Implementieren Sie die Lorenz-Differentialgleichungen in der Funktion $\mathbf{F}$.
+
+1. Plotten Sie (a) für $\alpha = 0$ und (b) für $\alpha = 5$ jeweils mit $h = 0.01$ den Verlauf beider Lösungen als parametrische Kurve im $\mathbb{R}^3$. Stellen Sie den Abstand $d_i = |\mathbf{y}^a_i - \mathbf{y}^b_i|$ grafisch dar.
+
+1. Kopieren Sie den Code aus Teil 2 und setzen Sie $\alpha = 10^{-15}$. Wie bewerten Sie das Ergebnis?
+
+1. Lesen Sie das Kapitel 'Der Flügelschlag eines Schmetterlings in Brasilien' aus dem Buch 'Alles ist relativ und anything goes' von John Higgs (freiwillig, das Kapitel finden Sie auf Moodle).
+
+
+
+
+

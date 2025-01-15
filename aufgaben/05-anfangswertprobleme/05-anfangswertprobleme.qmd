@@ -11,7 +11,7 @@ Implementieren Sie die Funktionen
   rungekutta(F, I, h, y0)
 ```
 
-in Julia/Python. Parameter sind jeweils die Funktion der Differentialgleichung $F$, das Lösungs\-intervall $I$, die Schrittweite $h$ und der Anfangswert $y_0$. Die Funktionen gibt zwei Arrays zurück, die jeweils die Werte $x_0, x_1, \dots, x_N$ sowie $y_0, y_1, \dots, y_N$ enthalten.
+in Julia/Python. Parameter sind jeweils die Funktion der Differentialgleichung $F$, das Lösungsintervall $I$, die Schrittweite $h$ und der Anfangswert $y_0$. Die Funktionen gibt zwei Arrays zurück, die jeweils die Werte $x_0, x_1, \dots, x_N$ sowie $y_0, y_1, \dots, y_N$ enthalten.
 
 Lösen Sie mit allen drei Funktionen näherungsweise das Anfangswertproblem
 
