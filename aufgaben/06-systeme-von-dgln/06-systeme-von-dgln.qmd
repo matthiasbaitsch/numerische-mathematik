@@ -83,7 +83,7 @@ Erzeugen Sie eine Datei `stabilitaet.ipynb` und bearbeiten Sie folgende Punkte:
 
 ## Abhängigkeit von Startwerten
 
-Im Jahr 1963 hat der Meteorologe Edward N. Lorenz das Anfangswertproblem 
+Im Jahr 1963 hat der Meteorologe Edward N. Lorenz das [Anfangswertproblem](https://de.wikipedia.org/wiki/Lorenz-Attraktor) 
 
 $$
   \begin{array}{rcl}
@@ -107,7 +107,7 @@ $$
 
 Mit dem Parameter $\alpha \in \mathbb{R}$ kann der Einfluss des Startwertes $\mathbf{y}(0)$ untersucht werden.
 
-Das System von Differentialgleichungen hat seinen Hintergrund in der Modellierung atmosphärischer Strömungen. Als stark vereinfachtes Modell dient dabei die so genannte Bernard-Konvektion eines Fluids zwischen zwei Platten unterschiedlicher Temperatur (siehe @fig-bernard und \url{https://www.tuhh.de/rzt/rzt/it/Studium/seminar-lorenz}).
+Das System von Differentialgleichungen hat seinen Hintergrund in der Modellierung atmosphärischer Strömungen. Als stark vereinfachtes Modell dient dabei die so genannte Bernard-Konvektion eines Fluids zwischen zwei Platten unterschiedlicher Temperatur (siehe @fig-bernard).
 
 ![Bénard-Konvektion (Quelle: TU Hamburg-Harburg)](bilder/benardkonvektion.png){#fig-bernard}
 
@@ -115,11 +115,24 @@ Der Verlauf der Lösungen soll für $0 \leq t \leq 40$ und unterschiedliche Wert
 
 1. Implementieren Sie die Lorenz-Differentialgleichungen in der Funktion $\mathbf{F}$.
 
-1. Plotten Sie (a) für $\alpha = 0$ und (b) für $\alpha = 5$ jeweils mit $h = 0.01$ den Verlauf beider Lösungen als parametrische Kurve im $\mathbb{R}^3$. Stellen Sie den Abstand $d_i = |\mathbf{y}^a_i - \mathbf{y}^b_i|$ grafisch dar.
+1. Plotten Sie (a) für $\alpha = 0$ und (b) für $\alpha = 5$ jeweils mit $h = 0.01$ den Verlauf beider Lösungen als parametrische Kurve im $\mathbb{R}^3$. Stellen Sie den Abstand $d_i = |\mathbf{y}^a_i - \mathbf{y}^b_i|$ grafisch dar. 
 
 1. Kopieren Sie den Code aus Teil 2 und setzen Sie $\alpha = 10^{-15}$. Wie bewerten Sie das Ergebnis?
 
 1. Lesen Sie das Kapitel 'Der Flügelschlag eines Schmetterlings in Brasilien' aus dem Buch 'Alles ist relativ und anything goes' von John Higgs (freiwillig, das Kapitel finden Sie auf Moodle).
+
+Tipp: Den Vektor mit den Normen der Zeilenvektoren einer Matrix $\mathbf{A}$ berechnen Sie mit
+
+::: {.panel-tabset}
+### Julia
+```{.julia}
+norm.(eachrow(A))
+```
+### Python
+```{.python}
+np.linalg.norm(yb - ya, axis=1)
+```
+:::
 
 
 
