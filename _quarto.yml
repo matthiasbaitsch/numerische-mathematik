@@ -2,9 +2,12 @@ project:
   output-dir: _output
 
 lang: de
-number-depth: 1
-number-sections: true
 
 format: 
-  html: default
-  pdf: default
+  html:
+    number-sections: true
+    number-depth: 3
+  typst:
+    mainfont: "Arial"
+    number-sections: true
+    number-depth: 3

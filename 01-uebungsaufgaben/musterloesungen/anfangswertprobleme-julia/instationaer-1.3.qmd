@@ -1,0 +1,52 @@
+---
+title: Aufgaben zur instationäre Wärmeleitung in einer Wand
+subtitle: Aufgabe 1.3
+jupyter: julia-1.11
+---
+
+```{julia}
+using CairoMakie
+
+include("odesolve.jl")
+include("instationaer_ar.jl")
+include("instationaer_hilfsfunktionen.jl")
+```
+
+## Funktion zur Berechnung
+
+```{julia}
+function solve(hx, ht)
+    wall = [
+        WallLayer(0.115, 1.00, 1000, 1800)
+        WallLayer(0.200, 0.04, 900, 50)
+        WallLayer(0.250, 2.30, 1000, 2400)
+    ]
+    ω = 2 * π / (24 * 60 * 60)
+    ti(t) = 20
+    ta(t) = 5 - 10 * cos(ω * t)
+    rbi = Boundary(7.5, ti)
+    rba = Boundary(25.0, ta)
+    A, r = compute_ar(refine_wall_layers(wall, hx), rba, rbi)
+    F(t, theta) = -A * theta + r(t)
+    return rungekutta(F, [0, 72 * 3600], ht, A \ r(0))
+end
+```
+
+## Schichtdicken und Zeitschrittweiten
+
+```{julia}
+plot_sol(solve(0.025, 469)...)
+```
+
+```{julia}
+plot_sol(solve(0.0125, 114)...)
+```
+
+```{julia}
+plot_sol(solve(0.00625, 28)...)
+```
+
+```{julia}
+scatterlines([0.025, 0.0125, 0.00625], [469, 114, 28])
+```
+

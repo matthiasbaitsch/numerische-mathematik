@@ -1,0 +1,85 @@
+---
+title: Aufgabenblatt 7
+subtitle: Instationäre Wärmeleitung in einer Wand
+---
+
+\newcommand{\SI}[2]{#1\,\mathrm{#2}}
+\newcommand{\si}[1]{\mathrm{#1}}
+\newcommand{\bm}[1]{\mathbf{#1}}
+\newcommand{\celsius}{°}
+\newcommand{\hour}{h}
+
+## Wärmeleitung
+
+![](bilder/wandaufbau.svg)
+
+Für den oben dargestellten Wandaufbau werden folgende Fragestellungen betrachtet:
+
+a. Stationär: In einem stationären Zustand ändert sich die Temperatur nicht über die Zeit, es gilt also $\dot\theta(x) = 0$. Vorgegeben sind die Temperaturen
+   $$
+   \theta_a = \SI{-5}{\celsius} \quad \text{und} \quad \theta_i = \SI{20}{\celsius}.     
+   $$
+   Gesucht ist die Temperaturverteilung $\theta = \theta(x)$. 
+
+a. Instationär: Hier sind die Temperaturen zu
+   $$
+   \theta_a(t) = (5 - 10 \cdot \cos(\omega t)) \si{\celsius} 
+   \quad \text{und} \quad 
+   \theta_i = \SI{20}{\celsius} 
+   \quad \text{mit} \quad
+   \omega = \frac{2\pi}{24 \cdot 60 \cdot 60} \; \si{rad/s}
+   $$
+   vorgegeben. Gesucht ist die Temperaturverteilung $\theta = \theta(x, t)$ über einen Zeitraum von drei Tagen.
+
+### Referenzlösung mit drei Kontrollvolumen
+
+Um die Vorgehensweise zu verstehen und als Referenzlösung für die allgemeine Programmierung sollen Sie zunächst mit drei Kontrollvolumen rechnen (klar, diese Unterteilung ist viel zu grob). 
+
+1. Formulieren Sie auf dem Papier für eine räumliche Diskretisierung mit drei Kontrollvolumen (für jede Schicht eines) die Differentialgleichung für den instationären Fall. Berechnen Sie $\dot{\bm{\theta}}(t)$ für $\theta_1(0) = \theta_2(0) = \theta_3(0) = 0$ zum Zeitpunkt $t = \SI{0}{h}$. 
+
+1. Stellen Sie in Julia/Python die zugehörige Matrix $\mathbf{A}$ und die Funktion $\mathbf{r}$ (instationärer Fall) auf (mit den Parametern berechnen, nicht aus 1 abschreiben). Vergleichen Sie die Werte mit ihrer Handrechnung aus Schritt 1.
+
+1. Berechnen Sie die stationäre Lösung zu $\mathbf{r}(0)$ und plotten Sie das Ergebnis.
+
+1. Implementieren und testen Sie die Funktion der Differentialgleichung.
+
+1. Lösen Sie das Anfangswertproblem (stationäre Lösung als Anfangswert) über einen Zeitraum von drei Tagen. Plotten Sie die Lösung über die Zeit sowie für $t = \SI{0}{\hour}$ und $t = \SI{12}{\hour}$ über den Ort.
+
+### Lösung mit beliebig feiner Unterteilung
+ 
+ Mithilfe der auf Moodle zur Verfügung gestellten Funktionen können Sie die Ausgangsdaten für die Simulation wie folgt bereitstellen: 
+
+TODO: Kopieren
+
+Die Randbedingung (Wärmeübergangskoeffizient und Funktion der Temperatur) innen und außen werden in den Structs `rbi` und `rba` abgelegt. Weiterhin erzeugt die Funktion `WallLayer(d, l, c, r)` eine Wandschicht mit den angegeben Materialparametern (schauen Sie mal in den Code, das ist wirklich ganz einfach). Mithilfe von `refine_wall_layers(v, h)` lassen sich die Schichten dann in Kontrollvolumen unterteilen. Der Wert `h` dient dabei als Anhaltswert für die Dicke. Geben Sie in die Variablen `v` und `vr` aus, dann sollte klar werden, wie das funktioniert. Aufgaben:
+
+- Implementieren Sie die Funktion `A, r = compute_ar(v, rba, rbi)` mit der Sie die Matrix $\mathbf{A}$ und die Funktion $\mathbf{r}$ bereitstellen. Wenn Sie die Funktion mit den drei Wandschichten (Variable \mc{v} im Code oben) aufrufen, dann sollten Sie die Werte aus Aufgabenteil 1.1 erhalten.
+
+- Bestimmen für $\mathbf{r}(0)$ die stationäre Lösung $\mathbf{\theta}_0$ und plotten Sie diese mit der bereitgestellten Funktion `plot_theta(v, theta)`.
+
+- Ermitteln sie für einen Zeitraum von 72 Stunden den Temperaturverlauf in der Wand. Verwenden Sie dabei eine Zeitschrittweite von einer Minute. Plotten Sie den Verlauf der Temperatur aller Kontrollvolumen über die Zeit sowie die Temperaturverteilung in der Wand nach $6, 12, 18$ sowie $24$ Stunden. Verwenden Sie dabei $\mathbf{r}(0)$ als Anfangswert.
+
+- Zusatzaufgaben: Erstellen Sie eine Animation des Temperaturverlaufs über die Zeit. 
+
+### Stabilität des Lösungsverfahrens
+
+Bestimmen Sie für Kontrollvolumen der Dicken $\SI{2.5}{cm}$, $\SI{1.25}{cm}$ sowie $\SI{0.625}{cm}$ die maximale Zeitschrittweite (in ganzen Sekunden), für die das Runge-Kutta-Verfahren noch sinnvolle Ergebnisse liefert. Es bietet sich hierfür an, die gesamte Rechnung in einer Funktion `t, theta = solve(hx, ht)` unterzubringen. Dabei ist `hx` die Schichtdicke und `ht` die Zeitschrittweite. Die gesuchte Zeitschrittweite kann durch gezieltes Ausprobieren bestimmt werden.
+
+
+## Implizites Euler-Verfahren (freiwillig)
+
+Anfangswertprobleme der Form
+$$
+  \mathbf{y}'(x) = - \mathbf{A} \mathbf{y}(x) + \mathbf{r}(x)
+$$
+lassen sich vergleichsweise einfach mit dem impliziten Euler-Verfahren lösen.
+
+Aufgaben:
+
+- Leiten Sie die Rechenvorschrift für $\mathbf{y}_{i+1}$ des impliziten Euler-Verfahrens für das Problem oben her. Tipp: Die Matrix $\mathbf{A}$ ist invertierbar!
+
+- Programmieren Sie das implizite Euler-Verfahren in einer Funktion `x, y = euler_mplizit(A, r, I, h, y0)`
+
+- Lösen Sie das Wärmeleitungsproblem der Wand mit dem impliziten Euler-Verfahren. Was ist die maximale Schrittweite mit der Sie eine Lösung erhalten, die nicht allzu stark von der des Runge-Kutta-Verfahrens abweicht?
+
+

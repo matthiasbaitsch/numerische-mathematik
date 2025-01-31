@@ -88,7 +88,7 @@ Im Jahr 1963 hat der Meteorologe Edward N. Lorenz das [Anfangswertproblem](https
 $$
   \begin{array}{rcl}
     \dot y_1 & = & \sigma \cdot (y_2 - y_1) \\[1ex]
-    \dot y_2 & = & y_1 \cdot (\rho - y_3) - y_2 \\[1ex]
+    \dot y_2 & = & y_1 \cdot (\r - y_3) - y_2 \\[1ex]
     \dot y_3 & = & y_1 y_2 - \beta y_3
   \end{array}
   \quad\text{mit}\quad
@@ -99,10 +99,10 @@ $$
   \end{array}
 $$
 
-formuliert. Dabei sind $y_1, y_2, y_3$ Funktionen von $t$ und $\sigma, \rho, \beta \in \mathbb{R}$ Parameter mit den Werten
+formuliert. Dabei sind $y_1, y_2, y_3$ Funktionen von $t$ und $\sigma, \r, \beta \in \mathbb{R}$ Parameter mit den Werten
 
 $$
-  \sigma = 10, \quad \rho = 28 \quad \text{und} \quad \beta = 8/3.
+  \sigma = 10, \quad \r = 28 \quad \text{und} \quad \beta = 8/3.
 $$
 
 Mit dem Parameter $\alpha \in \mathbb{R}$ kann der Einfluss des Startwertes $\mathbf{y}(0)$ untersucht werden.

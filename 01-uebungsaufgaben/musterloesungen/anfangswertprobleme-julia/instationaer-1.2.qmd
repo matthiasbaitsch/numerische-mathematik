@@ -1,0 +1,86 @@
+---
+title: Aufgaben zur instationäre Wärmeleitung in einer Wand
+subtitle: Aufgabe 1.2
+jupyter: julia-1.11
+---
+
+```{julia}
+using CairoMakie
+using LinearAlgebra
+
+include("odesolve.jl")
+include("instationaer_ar.jl")
+include("instationaer_hilfsfunktionen.jl")
+```
+
+## Wandschichten und Randbedingungen
+
+```{julia}
+ω = 2 * π / (24 * 3600)
+ti(t) = 20;
+ta(t) = 5 - 10 * cos(ω * t);
+
+wall = [
+    WallLayer(0.115, 1.00, 1000, 1800)
+    WallLayer(0.200, 0.04, 900, 50)
+    WallLayer(0.250, 2.30, 1000, 2400)
+]
+
+rbi = Boundary(7.5, ti)
+rba = Boundary(25.0, ta)
+```
+
+Test für drei Schichten
+
+```{julia}
+A, r = compute_ar(wall, rba, rbi)
+Aref = 1e-3 * [0.1227 -0.0019 0; -0.0434 0.0869 -0.0435; 0 -0.0007 0.0132]
+r00ref = 1e-3 * [-0.6039, 0, 0.25]
+r12ref = [0.0018, 0, 0.0003]
+println("    A OK: ", norm(A - Aref) < 1e-6)
+println("r( 0) OK: ", norm(r(0) - r00ref) < 1e-6)
+println("r(12) OK: ", norm(r(12 * 3600) - r12ref) < 1e-4)
+```
+
+Feine Unterteilung
+
+```{julia}
+wall_r = refine_wall_layers(wall, 0.025)
+A, r = compute_ar(wall_r, rba, rbi);
+```
+
+## Punkt 2: Stationäre Lösung
+
+```{julia}
+theta0 = A \ r(0)
+plot_temp(wall_r, theta0)
+```
+
+## Punkt 3: Transiente Berechnung
+
+```{julia}
+F(t, theta) = -A * theta + r(t)
+
+ht = 60;
+t, theta = rungekutta(F, [0, 72 * 3600], ht, theta0)
+```
+
+Plot über die Zeit
+
+```{julia}
+plot_sol(t, theta)
+```
+
+Plot über den Ort
+
+```{julia}
+plot_temp(wall_r, theta[1, :], "t = 0h")
+```
+
+```{julia}
+plot_temp(wall_r, theta[index(12, ht), :],"t = 12h")
+```
+
+```{julia}
+plot_temp(wall_r, theta[index(24, ht), :], "t = 24h")
+```

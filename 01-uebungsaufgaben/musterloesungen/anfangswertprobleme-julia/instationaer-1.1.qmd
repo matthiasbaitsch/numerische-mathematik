@@ -1,0 +1,121 @@
+---
+title: Aufgaben zur instationäre Wärmeleitung in einer Wand
+subtitle: Aufgabe 1.1
+jupyter: julia-1.11
+---
+
+```{julia}
+using CairoMakie
+
+include("odesolve.jl")
+include("instationaer_hilfsfunktionen.jl")
+```
+
+## Parameter
+
+```{julia}
+d1 = 0.115
+l1 = 1
+c1 = 1000
+r1 = 1800
+
+d2 = 0.2
+l2 = 0.04
+c2 = 900
+r2 = 50
+
+d3 = 0.25
+l3 = 2.3
+c3 = 1000
+r3 = 2400
+
+wall = [
+    WallLayer(d1, l1, c1, r1)
+    WallLayer(d2, l2, c2, r2)
+    WallLayer(d3, l3, c3, r3)
+]
+
+ω = 2 * π / (24 * 3600)
+hi = 7.5
+ti(t) = 20
+ha = 25
+ta(t) = 5 - 10 * cos(ω * t)
+```
+
+## Punkt 2: Matrix A und Funktion r
+
+Matrix A
+
+```{julia}
+l1r = 2 / (d1 / l1 + d2 / l2)
+alpha1 = 1 / (c1 * r1 * d1)
+A11 = alpha1 * (ha + l1r)
+A12 = -alpha1 * l1r
+
+l2l = 2 / (d1 / l1 + d2 / l2)
+l2r = 2 / (d2 / l2 + d3 / l3)
+alpha2 = 1 / (c2 * r2 * d2)
+A21 = -alpha2 * l2l
+A22 = alpha2 * (l2l + l2r)
+A23 = -alpha2 * l2r
+
+l3l = 2 / (0.2 / 0.04 + 0.25 / 2.3)
+alpha3 = 1 / (c3 * r3 * d3)
+A32 = -alpha3 * l3l
+A33 = alpha3 * (l3l + hi)
+
+A = [A11 A12 0; A21 A22 A23; 0 A32 A33]
+```
+
+Funktion r
+
+```{julia}
+r(t) = [alpha1 * ha * ta(t), 0, alpha3 * hi * ti(t)]
+
+println(r(0))
+println(r(12 * 3600))
+```
+
+## Punkt 3: Stationäre Lösung
+
+```{julia}
+theta0 = A \ r(0)
+plot_temp(wall, theta0)
+```
+
+## Punkt 4: Funktion der DGL
+
+```{julia}
+F(t, theta) = -A * theta + r(t)
+
+println(F(0, zeros(3)))
+println(F(0, theta0))
+```
+
+## Punkt 5: Anfangswertproblem lösen
+
+```{julia}
+ht = 3600
+te = 3 * 24 * 3600
+t, theta = rungekutta(F, [0, te], ht, theta0)
+```
+
+Plot über die Zeit
+
+```{julia}
+plot_sol(t, theta)
+```
+
+Plot über den Ort
+
+```{julia}
+plot_temp(wall, theta[1, :], "t = 0h")
+```
+
+```{julia}
+plot_temp(wall, theta[index(12, ht), :], "t = 12h")
+```
+
+```{julia}
+plot_temp(wall, theta[index(24, ht), :], "t = 24h")
+```
